@@ -83,12 +83,19 @@ fs.readdir(path.resolve(path.join(basePath, 'json')), (err, files) => {
       nf: Number(json.nfeProc.NFe.infNFe.total.ICMSTot.vNF)
     }
 
-    console.log({
+    const data = {
       number,
       company,
       customer,
       products,
       total
-    })
+    }
+
+    fs.writeFileSync(path.resolve(
+      __dirname, 
+      `../tmp/out/${file}`),
+      JSON.stringify(data, null, 2)
+    )
+
   })
 })
