@@ -5,12 +5,16 @@
   "author": "Luiz Gonçalves <luizhbgoncalves@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "tsnd --transpile-only --ignore-watch node_modules src/index.ts"
+    "dev": "tsnd --transpile-only --ignore-watch node_modules src/server.ts"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "xml2json": "^0.12.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.12",
     "@types/node": "^15.6.1",
     "@types/xml2json": "^0.11.3",
     "ts-node-dev": "^1.1.6",

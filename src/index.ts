@@ -34,7 +34,7 @@ const basePath = path.resolve(__dirname, '../tmp')
 fs.readdir(path.resolve(path.join(basePath, 'json')), (err, files) => {
   if(err) return console.error(err)
 
-  files.forEach((file, index) => {
+  files.forEach((file) => {
     const json = require(`../tmp/json/${file}`)
 
     const number = json.nfeProc.NFe.infNFe.ide.nNF
