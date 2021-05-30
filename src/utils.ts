@@ -114,7 +114,7 @@ export const getFields = (filename: string) => {
 export const serializeNumbers = (value: string) => {
   if (typeof value !== 'string') return 0
   
-  return Number(Number(value).toFixed(2)) * 100
+  return Number(Number(value).toFixed(2))
 }
 
 export const calculateValue = (products: IProducts []) => {
@@ -122,7 +122,7 @@ export const calculateValue = (products: IProducts []) => {
     const { id, name, quantity } = product
     
     const total_price = product.total_price + product.taxes.ipi + product.taxes.icms_st - product.discount;
-    const unit_price = serializeNumbers(String(total_price / quantity * 100));
+    const unit_price = serializeNumbers(String(total_price / quantity));
     
     return {
       id,
