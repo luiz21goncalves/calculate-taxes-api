@@ -24,7 +24,7 @@ const upload = multer({ storage });
 
 app.use(cors());
 
-app.post('/fiscal-documents', upload.single('file'),(request, response) => {
+app.post('/xml/import', upload.single('file'),(request, response) => {
 try {
   const { file } = request
 
