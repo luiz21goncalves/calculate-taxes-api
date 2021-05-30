@@ -27,6 +27,8 @@ type ITotal = {
   nf: number;
 }
 
+type IProductsResponse = Pick<IProducts , 'id' | 'name' | 'quantity' | 'total_price' | 'unit_price'>
+
 export const convertToJson = (path: string, filename: string) => {
   const value = fs.readFileSync(path).toString()
 
@@ -35,7 +37,7 @@ export const convertToJson = (path: string, filename: string) => {
   fs.writeFileSync(resolve(__dirname, '..','tmp','json', `${filename}.json`), json)
 }
 
-export const getFields = (filename) => {
+export const getFields = (filename: string) => {
   const json = require(`../tmp/json/${filename}.json`)
 
   const number = Number(json.nfeProc.NFe.infNFe.ide.nNF)
@@ -103,7 +105,7 @@ export const getFields = (filename) => {
       number,
       company,
       customer,
-      products,
+      products: calculateValue(products),
       total
     }
 }
@@ -112,4 +114,21 @@ export const serializeNumbers = (value: string) => {
   if (typeof value !== 'string') return 0
 
   return Number(Number(value).toFixed(2)) * 100
+}
+
+export const calculateValue = (products: IProducts []) => {
+  return products.map((product) => {
+    const { id, name, quantity } = product
+
+    const total_price = product.total_price + product.taxes.ipi + product.taxes.icms_st - product.discount;
+    const unit_price = total_price / quantity * 100;
+
+    return {
+      id,
+      name,
+      quantity,
+      total_price,
+      unit_price,
+    }
+  })
 }
