@@ -24,6 +24,12 @@ const upload = multer({ storage });
 
 app.use(cors());
 
+app.get('/', (request, response) => {
+  return response.json({
+    ok: true
+  })
+})
+
 app.post('/xml/import', upload.single('file'),(request, response) => {
 try {
   const { file } = request
