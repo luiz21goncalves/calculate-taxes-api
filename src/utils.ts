@@ -122,7 +122,7 @@ export const calculateValue = (products: IProducts []) => {
     const { id, name, quantity } = product
     
     const total_price = product.total_price + product.taxes.ipi + product.taxes.icms_st - product.discount;
-    const unit_price = total_price / quantity * 100;
+    const unit_price = serializeNumbers(String(total_price / quantity * 100));
     
     return {
       id,
