@@ -63,7 +63,6 @@ export const getFields = (filename) => {
           ipi: serializeNumbers(json.nfeProc.NFe.infNFe.det.imposto?.IPI?.IPITrib?.vIPI)
         },
         other: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vOutro),
-        icmsSt: serializeNumbers(json.nfeProc.NFe.infNFe.det.imposto?.ICMS[Object.keys(json.nfeProc.NFe.infNFe.det.imposto.ICMS)[0]].vICMSST),
         discount: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vDesc),
       })
     }
@@ -71,12 +70,17 @@ export const getFields = (filename) => {
     if (!isNotProductArray) {
       json.nfeProc.NFe.infNFe.det.forEach(product => {
         products.push({
-          name: element.prod.xProd,
-          quantity: serializeNumbers(element.prod.qCom),
-          price: serializeNumbers(element.prod.vProd),
-          other: serializeNumbers(element.prod.vOutro),
-          icmsSt: serializeNumbers(element.imposto?.ICMS[Object.keys(element.imposto.ICMS)[0]].vICMSST),
-          discount: serializeNumbers(element.prod.vDesc),
+          id: Number(product.prod.cProd),
+          name: product.prod.xProd,
+          quantity: serializeNumbers(product.prod.qCom),
+          unit_price: serializeNumbers(product.prod.vUnCom),
+          total_price: serializeNumbers(product.prod.vProd),
+          taxes: {
+            icms_st: serializeNumbers(product.imposto?.ICMS[Object.keys(product.imposto.ICMS)[0]].vICMSST),
+            ipi: serializeNumbers(product.imposto?.IPI?.IPITrib?.vIPI)
+          },
+          other: serializeNumbers(product.prod.vOutro),
+          discount: serializeNumbers(product.prod.vDesc),
         })
       });
     }
@@ -105,6 +109,7 @@ export const getFields = (filename) => {
 }
 
 export const serializeNumbers = (value: string) => {
-  const number = Number(value)
-  return number
+  if (typeof value !== 'string') return 0
+
+  return Number(Number(value).toFixed(2)) * 100
 }
