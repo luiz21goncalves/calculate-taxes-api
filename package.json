@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsnd --transpile-only --ignore-watch node_modules src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "yarn build | node dist/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
