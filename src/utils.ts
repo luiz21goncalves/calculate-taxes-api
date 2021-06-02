@@ -101,12 +101,24 @@ export const getFields = (filename: string) => {
   
   fs.unlinkSync(resolve(__dirname, '..','tmp','json', `${filename}.json` ))
   fs.unlinkSync(resolve(__dirname, '..','tmp','xml', `${filename}.xml` ))
-  
+
+  const calculatedProducts = calculateValue(products)
+
+  const totalProducts = calculatedProducts.reduce((acc, item) => {
+    return acc+ item.total_price
+  }, 0)
+
+  const hasErrorCalculation = total.nf !== totalProducts
+
+  if (hasErrorCalculation) {
+    throw new Error('error calculation');
+  }
+
   return { 
     number,
     seller,
     customer,
-    products: calculateValue(products),
+    products: calculatedProducts,
     total
   }
 }
