@@ -96,21 +96,24 @@ export const getFields = (filename: string) => {
     ipi: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vIPI),
     discount: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vDesc),
     safe: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vSeg),
-    nf: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vNF)
+    nf: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vNF),
   } as ITotal;
   
   fs.unlinkSync(resolve(__dirname, '..','tmp','json', `${filename}.json` ))
   fs.unlinkSync(resolve(__dirname, '..','tmp','xml', `${filename}.xml` ))
 
-  const calculatedProducts = calculateValue(products)
+  const totalProducts = products.reduce((acc, product) => {
+    const {other,total_price,taxes, discount} = product
 
-  const totalProducts = calculatedProducts.reduce((acc, item) => {
-    return acc+ item.total_price
+    const total = acc + other + total_price + taxes.icms_st + taxes.ipi - discount
+
+    return total
   }, 0)
 
   const hasErrorCalculation = total.nf !== totalProducts
 
   if (hasErrorCalculation) {
+    console.error('error calculation', {hasErrorCalculation, total, totalProducts})
     throw new Error('error calculation');
   }
 
@@ -118,30 +121,19 @@ export const getFields = (filename: string) => {
     number,
     seller,
     customer,
-    products: calculatedProducts,
+    products,
     total
   }
 }
 
-export const serializeNumbers = (value: string) => {
+const convertToCents = (value: string): number => {
   if (typeof value !== 'string') return 0
-  
-  return Number(Number(value).toFixed(2))
+
+  return Number(value) * 100
 }
 
-export const calculateValue = (products: IProducts []) => {
-  return products.map((product) => {
-    const { id, name, quantity, other } = product
-    
-    const total_price = product.total_price + product.taxes.ipi + product.taxes.icms_st + other - product.discount;
-    const unit_price = serializeNumbers(String(total_price / quantity));
-    
-    return {
-      id,
-      name,
-      quantity,
-      total_price,
-      unit_price,
-    }
-  })
+export const serializeNumbers = (value: string): number => {
+  const cents = convertToCents(value)
+
+  return Number(cents.toFixed(0))
 }
