@@ -119,9 +119,9 @@ export const serializeNumbers = (value: string) => {
 
 export const calculateValue = (products: IProducts []) => {
   return products.map((product) => {
-    const { id, name, quantity } = product
+    const { id, name, quantity, other } = product
     
-    const total_price = product.total_price + product.taxes.ipi + product.taxes.icms_st - product.discount;
+    const total_price = product.total_price + product.taxes.ipi + product.taxes.icms_st + other - product.discount;
     const unit_price = serializeNumbers(String(total_price / quantity));
     
     return {
