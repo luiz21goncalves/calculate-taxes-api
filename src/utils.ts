@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import convert from 'xml2json'
 
 type IProducts = {
-  id: number;
+  id: string;
   name: string;
   quantity: number;
   unit_price: number;
@@ -56,7 +56,7 @@ export const getFields = (filename: string) => {
   
   if (isNotProductArray) {
     products.push({
-      id: Number(json.nfeProc.NFe.infNFe.det.prod.cProd),
+      id: json.nfeProc.NFe.infNFe.det.prod.cProd,
       name: String(json.nfeProc.NFe.infNFe.det.prod.xProd),
       quantity: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.qCom),
       unit_price: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vUnCom),
@@ -73,7 +73,7 @@ export const getFields = (filename: string) => {
   if (!isNotProductArray) {
     json.nfeProc.NFe.infNFe.det.forEach(product => {
       products.push({
-        id: Number(product.prod.cProd),
+        id: product.prod.cProd,
         name: product.prod.xProd,
         quantity: serializeNumbers(product.prod.qCom),
         unit_price: serializeNumbers(product.prod.vUnCom),
