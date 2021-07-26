@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { resolve } from 'path';
-import convert from 'xml2json'
+import parser from 'fast-xml-parser';
 
 type IProducts = {
   id: string;
@@ -32,9 +32,9 @@ type IProductsResponse = Pick<IProducts , 'id' | 'name' | 'quantity' | 'total_pr
 export const convertToJson = (path: string, filename: string) => {
   const value = fs.readFileSync(path).toString()
   
-  const json = convert.toJson(value);
-  
-  fs.writeFileSync(resolve(__dirname, '..','tmp','json', `${filename}.json`), json)
+  const json = parser.parse(value);
+
+  fs.writeFileSync(resolve(__dirname, '..','tmp','json', `${filename}.json`), JSON.stringify(json, null, 2))
 }
 
 export const getFields = (filename: string) => {
@@ -127,7 +127,7 @@ export const getFields = (filename: string) => {
 }
 
 const convertToCents = (value: string): number => {
-  if (typeof value !== 'string') return 0
+  if (typeof value === 'undefined') return 0
 
   return Number(value) * 100
 }
