@@ -14,6 +14,7 @@ type IProducts = {
     icms_st: number;
   }
   other: number;
+  shipping: number;
 }
 
 type ITotal = {
@@ -67,6 +68,7 @@ export const getFields = (filename: string) => {
       },
       other: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vOutro),
       discount: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vDesc),
+      shipping: serializeNumbers(json.nfeProc.NFe.det.prod.vFrete),
     })
   }
   
@@ -82,8 +84,9 @@ export const getFields = (filename: string) => {
           icms_st: serializeNumbers(product.imposto?.ICMS[Object.keys(product.imposto.ICMS)[0]].vICMSST),
           ipi: serializeNumbers(product.imposto?.IPI?.IPITrib?.vIPI)
         },
-        other: serializeNumbers(product.prod.vOutro),
+        other: serializeNumbers(  product.prod.vOutro),
         discount: serializeNumbers(product.prod.vDesc),
+        shipping: serializeNumbers(product.prod.vFrete),
       })
     });
   }
@@ -103,9 +106,9 @@ export const getFields = (filename: string) => {
   fs.unlinkSync(resolve(__dirname, '..','tmp','xml', `${filename}.xml` ))
 
   const totalProducts = products.reduce((acc, product) => {
-    const {other,total_price,taxes, discount} = product
+    const {other, total_price, taxes, discount, shipping} = product
 
-    const total = acc + other + total_price + taxes.icms_st + taxes.ipi - discount
+    const total = acc + other + total_price + taxes.icms_st + taxes.ipi + shipping - discount
 
     return total
   }, 0)
