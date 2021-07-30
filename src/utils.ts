@@ -6,6 +6,7 @@ type IProducts = {
   id: string;
   name: string;
   quantity: number;
+  unit: string;
   unit_price: number;
   total_price: number;
   discount: number;
@@ -63,6 +64,7 @@ export const getFields = (filename: string) => {
       quantity: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.qCom),
       unit_price: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vUnCom),
       total_price: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vProd),
+      unit: json.nfeProc.Nfe.infNFe.det.prod.uCom,
       taxes: {
         icms_st: serializeNumbers(
           json.nfeProc.NFe.infNFe.det.imposto?.ICMS[
@@ -87,6 +89,7 @@ export const getFields = (filename: string) => {
         quantity: serializeNumbers(product.prod.qCom),
         unit_price: serializeNumbers(product.prod.vUnCom),
         total_price: serializeNumbers(product.prod.vProd),
+        unit: product.prod.uCom,
         taxes: {
           icms_st: serializeNumbers(
             product.imposto?.ICMS[Object.keys(product.imposto.ICMS)[0]].vICMSST
