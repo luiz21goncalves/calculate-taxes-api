@@ -1,13 +1,13 @@
 import { randomBytes } from 'crypto';
 import multer, { Options } from 'multer';
-import { resolve, join } from 'path';
+import { resolve } from 'path';
 
-const tmpFolder = resolve(__dirname, '..', 'tmp');
+const tmpFolder = resolve(__dirname, '..', '..', 'tmp');
 
 const uploadConfig: Options = {
   storage: multer.diskStorage({
     destination: (request, file, callback) => {
-      callback(null, join(tmpFolder, 'xml'));
+      callback(null, resolve(tmpFolder, 'xml'));
     },
 
     filename: (request, file, callback) => {

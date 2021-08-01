@@ -1,3 +1,6 @@
+import { resolve } from 'path';
+
+import { tmpFolder } from '../config/upload';
 import { serializeNumbers } from './serializeNumbers';
 
 type IProducts = {
@@ -28,7 +31,7 @@ type ITotal = {
 };
 
 const getNoteFields = (filename: string) => {
-  const json = require(`../tmp/json/${filename}.json`);
+  const json = require(resolve(tmpFolder, 'json', `${filename}.json`));
 
   const number = Number(json.nfeProc.NFe.infNFe.ide.nNF);
 
