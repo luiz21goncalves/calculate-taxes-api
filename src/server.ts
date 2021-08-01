@@ -1,54 +1,11 @@
 import cors from 'cors';
-import { randomBytes } from 'crypto';
 import express from 'express';
-import multer from 'multer';
-import { resolve, join } from 'path';
 
-import { convertToJson, getFields } from './utils';
+import { routes } from './routes';
 
 const app = express();
 
-const tmpPath = resolve(__dirname, '..', 'tmp');
-
-const storage = multer.diskStorage({
-  destination: (request, file, callback) => {
-    callback(null, join(tmpPath, 'xml'));
-  },
-  filename: (request, file, callback) => {
-    const hash = randomBytes(12).toString('hex');
-    const filename = `${hash}-${file.originalname}`;
-    callback(null, filename);
-  },
-});
-
-const upload = multer({ storage });
-
 app.use(cors());
-
-app.get('/', (request, response) => {
-  return response.json({
-    ok: true,
-  });
-});
-
-app.post('/xml/import', upload.single('file'), (request, response) => {
-  try {
-    const { file } = request;
-
-    const filename = file.filename.replace('.xml', '');
-
-    convertToJson(join(tmpPath, 'xml', file.filename), filename);
-
-    const data = getFields(filename);
-
-    return response.json(data);
-  } catch (error) {
-    console.error(error);
-    return response.status(500).json({
-      statusCode: 500,
-      message: 'Internal server error',
-    });
-  }
-});
+app.use(routes);
 
 app.listen(3333, () => console.log('Server is running'));
