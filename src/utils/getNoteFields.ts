@@ -104,33 +104,6 @@ const getNoteFields = (filename: string) => {
     nf: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vNF),
   } as ITotal;
 
-  const totalProducts = products.reduce((acc, product) => {
-    const { other, total_price, taxes, discount, shipping } = product;
-
-    const total =
-      acc +
-      other +
-      total_price +
-      taxes.icms_st +
-      taxes.ipi +
-      shipping -
-      discount;
-
-    return total;
-  }, 0);
-
-  const hasErrorCalculation = total.nf !== totalProducts;
-
-  if (hasErrorCalculation) {
-    console.error('error calculation', {
-      hasErrorCalculation,
-      total,
-      totalProducts,
-    });
-
-    throw new Error('error calculation');
-  }
-
   return {
     number,
     seller,
