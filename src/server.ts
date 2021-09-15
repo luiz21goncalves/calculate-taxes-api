@@ -25,6 +25,7 @@ app.use(routes);
 
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
+app.use(Sentry.Handlers.errorHandler());
 
 app.get('/debug-sentry', (request, response) => {
   throw new Error('Sentry error!');
