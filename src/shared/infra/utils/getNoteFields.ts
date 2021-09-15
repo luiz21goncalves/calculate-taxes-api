@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 
-import { tmpFolder } from '../config/upload';
+import { tmpFolder } from '../../../config/upload';
 import { serializeNumbers } from './serializeNumbers';
 
 type IProducts = {

@@ -3,9 +3,9 @@ import fs from 'fs';
 import multer from 'multer';
 import { resolve } from 'path';
 
-import { tmpFolder, uploadConfig } from '../config/upload';
-import { convertToJson } from '../utils/convertToJson';
-import { getNoteFields } from '../utils/getNoteFields';
+import { tmpFolder, uploadConfig } from '../../../../config/upload';
+import { convertToJson } from '../../utils/convertToJson';
+import { getNoteFields } from '../../utils/getNoteFields';
 
 const routes = Router();
 const upload = multer(uploadConfig);
