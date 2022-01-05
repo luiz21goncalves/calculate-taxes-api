@@ -45,16 +45,17 @@ const getNoteFields = (filename: string) => {
   };
 
   const products: IProducts[] = [];
-  const isNotProductArray = json.nfeProc.NFe.infNFe.det.prod;
+  const productType = typeof json.nfeProc.NFe.infNFe.det.prod;
+  const isObject = productType === 'object';
 
-  if (isNotProductArray) {
+  if (isObject) {
     products.push({
       id: json.nfeProc.NFe.infNFe.det.prod.cProd,
       name: String(json.nfeProc.NFe.infNFe.det.prod.xProd),
       quantity: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.qCom),
       unit_price: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vUnCom),
       total_price: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vProd),
-      unit: json.nfeProc.Nfe.infNFe.det.prod.uCom,
+      unit: json.nfeProc.NFe.infNFe.det.prod.uCom,
       taxes: {
         icms_st: serializeNumbers(
           json.nfeProc.NFe.infNFe.det.imposto?.ICMS[
@@ -67,11 +68,11 @@ const getNoteFields = (filename: string) => {
       },
       other: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vOutro),
       discount: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vDesc),
-      shipping: serializeNumbers(json.nfeProc.NFe.det.prod.vFrete),
+      shipping: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vFrete),
     });
   }
 
-  if (!isNotProductArray) {
+  if (!isObject) {
     json.nfeProc.NFe.infNFe.det.forEach((product) => {
       products.push({
         id: product.prod.cProd,
