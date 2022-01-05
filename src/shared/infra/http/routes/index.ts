@@ -10,10 +10,20 @@ import { getNoteFields } from '../../utils/getNoteFields';
 const routes = Router();
 const upload = multer(uploadConfig);
 
-routes.get('/', (request, response) => {
-  return response.json({
-    ok: true,
-  });
+routes.get('/healthcheck', (request, response) => {
+  const healthcheck = {
+    uptime: process.uptime(),
+    message: 'running',
+    timestamp: new Date(),
+  };
+
+  try {
+    return response.json(healthcheck);
+  } catch (err) {
+    healthcheck.message = err;
+
+    return response.json(healthcheck);
+  }
 });
 
 routes.post('/xml/import', upload.single('file'), (request, response) => {
