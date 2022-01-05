@@ -54,4 +54,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/calculate
+            yarn install --production --frozen-lockfile --link-duplicates
             pm2 restart all
