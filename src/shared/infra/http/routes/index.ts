@@ -45,9 +45,9 @@ routes.post('/xml/import', upload.single('file'), (request, response) => {
     fs.unlinkSync(resolve(tmpFolder, 'json', `${filename}.json`));
     fs.unlinkSync(resolve(tmpFolder, 'xml', `${filename}.xml`));
 
-    return response.status(500).json({
-      statusCode: 500,
-      message: 'Internal server error',
+    return response.status(400).json({
+      statusCode: 400,
+      message: 'Não foi possível calcular essa NFE-e.',
     });
   }
 });
