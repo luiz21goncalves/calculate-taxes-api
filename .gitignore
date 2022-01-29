@@ -1,7 +1,9 @@
 node_modules
 dist
 
-tmp/*
-!tmp/.gitkeep
+tmp/json/*
+tmp/xml/*
+!tmp/json/.gitkeep
+!tmp/xml/.gitkeep
 
 .env
