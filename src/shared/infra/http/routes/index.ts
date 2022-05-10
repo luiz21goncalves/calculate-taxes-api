@@ -6,6 +6,7 @@ import { resolve } from 'path';
 import { tmpFolder, uploadConfig } from '../../../../config/upload';
 import { convertToJson } from '../../utils/convertToJson';
 import { getNoteFields } from '../../utils/getNoteFields';
+import { logger } from '../../utils/logger';
 
 const routes = Router();
 const upload = multer(uploadConfig);
@@ -18,9 +19,11 @@ routes.get('/healthcheck', (request, response) => {
   };
 
   try {
+    logger.info('healthcheck', healthcheck);
     return response.json(healthcheck);
   } catch (err) {
     healthcheck.message = err;
+    logger.error(err);
 
     return response.json(healthcheck);
   }
@@ -40,7 +43,7 @@ routes.post('/xml/import', upload.single('file'), (request, response) => {
 
     return response.json(data);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
 
     fs.unlinkSync(resolve(tmpFolder, 'json', `${filename}.json`));
     fs.unlinkSync(resolve(tmpFolder, 'xml', `${filename}.xml`));

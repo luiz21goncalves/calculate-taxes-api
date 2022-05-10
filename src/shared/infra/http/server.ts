@@ -1,11 +1,12 @@
 import 'dotenv/config';
+import 'express-async-errors';
 
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
-import 'express-async-errors';
 
+import { logger } from '../utils/logger';
 import { routes } from './routes';
 
 const app = express();
@@ -33,14 +34,14 @@ app.get('/debug-sentry', (request, response) => {
 
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
-    console.log(err);
+    logger.error(err);
 
     return response.status(500).json({
       status: 'error',
-      message: `Internal server error`,
+      message: 'Internal server error',
       statusCode: 500,
     });
   }
 );
 
-app.listen(process.env.PORT, () => console.log('Server is running'));
+app.listen(process.env.PORT, () => logger.info('Server is running'));
