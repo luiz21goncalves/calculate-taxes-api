@@ -1,7 +1,8 @@
 import { app } from './app'
+import { ENV } from './env'
 import { logger } from './logger'
 
-app.listen({ port: 3333, host: '0.0.0.0' })
+app.listen({ port: ENV.PORT, host: '0.0.0.0' })
 
 const gracefulShutdown = () => {
   logger.info('Shutting down server')
