@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "tsx watch src/shared/infra/http/server.ts",
     "build": "tsup",
-    "start": "node dist/shared/infra/http/server.js",
+    "start": "node dist/server.js",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix"
   },
