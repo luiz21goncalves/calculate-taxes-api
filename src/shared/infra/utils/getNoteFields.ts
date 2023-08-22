@@ -1,52 +1,52 @@
-import { resolve } from 'path';
+import { resolve } from 'path'
 
-import { tmpFolder } from '../../../config/upload';
-import { serializeNumbers } from './serializeNumbers';
+import { tmpFolder } from '../../../config/upload'
+import { serializeNumbers } from './serializeNumbers'
 
 type IProducts = {
-  id: string;
-  name: string;
-  quantity: number;
-  unit: string;
-  unit_price: number;
-  total_price: number;
-  discount: number;
+  id: string
+  name: string
+  quantity: number
+  unit: string
+  unit_price: number
+  total_price: number
+  discount: number
   taxes: {
-    ipi: number;
-    icms_st: number;
-  };
-  other: number;
-  shipping: number;
-};
+    ipi: number
+    icms_st: number
+  }
+  other: number
+  shipping: number
+}
 
 type ITotal = {
-  products: number;
-  others: number;
-  ipi: number;
-  icms_st: number;
-  shipping: number;
-  safe: number;
-  discount: number;
-  nf: number;
-};
+  products: number
+  others: number
+  ipi: number
+  icms_st: number
+  shipping: number
+  safe: number
+  discount: number
+  nf: number
+}
 
-const getNoteFields = (filename: string) => {
-  const json = require(resolve(tmpFolder, 'json', `${filename}.json`));
+const getNoteFields = async (filename: string) => {
+  const json = await import(resolve(tmpFolder, 'json', `${filename}.json`))
 
-  const number = Number(json.nfeProc.NFe.infNFe.ide.nNF);
+  const number = Number(json.nfeProc.NFe.infNFe.ide.nNF)
 
   const seller = {
     cnpj: json.nfeProc.NFe.infNFe.emit.CNPJ,
     name: json.nfeProc.NFe.infNFe.emit.xNome,
-  };
+  }
   const customer = {
     cnpj: json.nfeProc.NFe.infNFe.dest.CNPJ,
     name: json.nfeProc.NFe.infNFe.dest.xNome,
-  };
+  }
 
-  const products: IProducts[] = [];
-  const productType = typeof json.nfeProc.NFe.infNFe.det.prod;
-  const isObject = productType === 'object';
+  const products: IProducts[] = []
+  const productType = typeof json.nfeProc.NFe.infNFe.det.prod
+  const isObject = productType === 'object'
 
   if (isObject) {
     products.push({
@@ -60,16 +60,16 @@ const getNoteFields = (filename: string) => {
         icms_st: serializeNumbers(
           json.nfeProc.NFe.infNFe.det.imposto?.ICMS[
             Object.keys(json.nfeProc.NFe.infNFe.det.imposto.ICMS)[0]
-          ].vICMSST
+          ].vICMSST,
         ),
         ipi: serializeNumbers(
-          json.nfeProc.NFe.infNFe.det.imposto?.IPI?.IPITrib?.vIPI
+          json.nfeProc.NFe.infNFe.det.imposto?.IPI?.IPITrib?.vIPI,
         ),
       },
       other: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vOutro),
       discount: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vDesc),
       shipping: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vFrete),
-    });
+    })
   }
 
   if (!isObject) {
@@ -83,15 +83,15 @@ const getNoteFields = (filename: string) => {
         unit: product.prod.uCom,
         taxes: {
           icms_st: serializeNumbers(
-            product.imposto?.ICMS[Object.keys(product.imposto.ICMS)[0]].vICMSST
+            product.imposto?.ICMS[Object.keys(product.imposto.ICMS)[0]].vICMSST,
           ),
           ipi: serializeNumbers(product.imposto?.IPI?.IPITrib?.vIPI),
         },
         other: serializeNumbers(product.prod.vOutro),
         discount: serializeNumbers(product.prod.vDesc),
         shipping: serializeNumbers(product.prod.vFrete),
-      });
-    });
+      })
+    })
   }
 
   const total = {
@@ -103,7 +103,7 @@ const getNoteFields = (filename: string) => {
     discount: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vDesc),
     safe: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vSeg),
     nf: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vNF),
-  } as ITotal;
+  } as ITotal
 
   return {
     number,
@@ -111,7 +111,7 @@ const getNoteFields = (filename: string) => {
     customer,
     products,
     total,
-  };
-};
+  }
+}
 
-export { getNoteFields };
+export { getNoteFields }
