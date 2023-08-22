@@ -8,8 +8,8 @@
     "dev": "tsx watch src/shared/infra/http/server.ts",
     "build": "tsup",
     "start": "node dist/shared/infra/http/server.js",
-    "lint": "eslint src --ext .ts,.js",
-    "lint:fix": "eslint src --ext .ts,.js --fix"
+    "lint": "eslint . --ext .ts,.js",
+    "lint:fix": "eslint . --ext .ts,.js --fix"
   },
   "dependencies": {
     "@sentry/node": "6.11.0",
