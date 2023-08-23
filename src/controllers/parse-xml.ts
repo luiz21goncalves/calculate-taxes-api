@@ -1,4 +1,9 @@
+import { randomUUID } from 'node:crypto'
+import fs from 'node:fs/promises'
+
 import { FastifyReply, FastifyRequest } from 'fastify'
+
+import { CONSTANTS } from '@/constants'
 
 export async function parseXml(request: FastifyRequest, replay: FastifyReply) {
   const file = await request.file()
@@ -13,7 +18,11 @@ export async function parseXml(request: FastifyRequest, replay: FastifyReply) {
     return replay.status(400).send({ message: 'Send an XML file.' })
   }
 
-  const filename = file.filename.replace('.xml', '')
+  const id = randomUUID()
+  const fileName = `${id}.xml`
+  const path = `${CONSTANTS.DIRECTORIES.XML}/${fileName}`
 
-  return replay.status(200).send({ filename, type: file.mimetype })
+  await fs.writeFile(path, file.file)
+
+  return replay.status(201).send({ id })
 }
