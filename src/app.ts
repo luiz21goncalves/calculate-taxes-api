@@ -5,6 +5,7 @@ import healthcheck from 'fastify-healthcheck'
 
 import { ENV } from './env'
 import { logger } from './logger'
+import { appRoutes } from './routes'
 
 const app = fastify({ logger })
 
@@ -17,6 +18,7 @@ Sentry.init({
 
 app.register(cors)
 app.register(healthcheck, { exposeUptime: true })
+app.register(appRoutes)
 
 app.setErrorHandler((error, _request, replay) => {
   logger.error(error)
