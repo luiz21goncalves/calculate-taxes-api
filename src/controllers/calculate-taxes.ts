@@ -1,5 +1,9 @@
+import fs from 'node:fs/promises'
+
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
+
+import { CONFIG } from '@/config'
 
 export async function calculateTaxes(
   request: FastifyRequest,
@@ -11,5 +15,7 @@ export async function calculateTaxes(
 
   const { id } = calculateTaxesParamsSchema.parse(request.params)
 
-  return replay.status(200).send({ id })
+  const xmlData = await fs.readFile(`${CONFIG.DIR.XML}/${id}.xml`)
+
+  return replay.status(200).send({ id, xml: xmlData.toString() })
 }
