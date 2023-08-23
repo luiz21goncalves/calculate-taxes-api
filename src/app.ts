@@ -30,7 +30,13 @@ app.setErrorHandler((error, _request, replay) => {
       .send({ message: 'Validation error.', issues: error.format() })
   }
 
-  Sentry.captureException(error)
+  const isProd = ENV.NODE_ENV === 'production'
+
+  if (isProd) {
+    Sentry.captureException(error)
+  } else {
+    logger.error(error)
+  }
 
   return replay.status(500).send({ message: 'Internal server error' })
 })
