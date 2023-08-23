@@ -11,9 +11,6 @@ dependencies:
   '@sentry/node':
     specifier: 7.64.0
     version: 7.64.0
-  '@sentry/tracing':
-    specifier: 7.64.0
-    version: 7.64.0
   dotenv:
     specifier: 16.3.1
     version: 16.3.1
@@ -703,13 +700,6 @@ packages:
       tslib: 2.6.2
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /@sentry/tracing@7.64.0:
-    resolution: {integrity: sha512-Php0XnnJolfxkFdgLlgwgRz3bgHmu/7gDRQaGQHJeDgCCjrmNHI+sHi8zmkWCWSO0Z1mi111n2ZUr9B9YLPBTg==}
-    engines: {node: '>=8'}
-    dependencies:
-      '@sentry-internal/tracing': 7.64.0
     dev: false
 
   /@sentry/types@7.64.0:
