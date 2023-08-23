@@ -3,7 +3,7 @@ import fs from 'node:fs/promises'
 
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { CONSTANTS } from '@/constants'
+import { CONFIG } from '@/config'
 
 export async function parseXml(request: FastifyRequest, replay: FastifyReply) {
   const file = await request.file()
@@ -20,7 +20,7 @@ export async function parseXml(request: FastifyRequest, replay: FastifyReply) {
 
   const id = randomUUID()
   const fileName = `${id}.xml`
-  const path = `${CONSTANTS.DIRECTORIES.XML}/${fileName}`
+  const path = `${CONFIG.DIR.XML}/${fileName}`
 
   await fs.writeFile(path, file.file)
 
