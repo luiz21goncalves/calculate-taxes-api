@@ -3,6 +3,7 @@ import multipart from '@fastify/multipart'
 import * as Sentry from '@sentry/node'
 import fastify from 'fastify'
 import healthcheck from 'fastify-healthcheck'
+import { ZodError } from 'zod'
 
 import { ENV } from './env'
 import { logger } from './logger'
@@ -23,7 +24,13 @@ app.register(multipart)
 app.register(appRoutes)
 
 app.setErrorHandler((error, _request, replay) => {
-  logger.error(error)
+  if (error instanceof ZodError) {
+    return replay
+      .status(400)
+      .send({ message: 'Validation error.', issues: error.format() })
+  }
+
+  Sentry.captureException(error)
 
   return replay.status(500).send({ message: 'Internal server error' })
 })
