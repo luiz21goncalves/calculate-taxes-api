@@ -5,6 +5,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
 import { CONFIG } from '@/config'
+import { serializeNumbers } from '@/utils'
 
 const parser = new XMLParser()
 
@@ -61,53 +62,56 @@ export async function calculateTaxes(
         products.push({
           id: product.prod.cProd,
           name: product.prod.xProd,
-          quantity: product.prod.qCom,
-          unit_price: product.prod.vUnCom,
-          total_price: product.prod.vProd,
+          quantity: serializeNumbers(product.prod.qCom),
+          unit_price: serializeNumbers(product.prod.vUnCom),
+          total_price: serializeNumbers(product.prod.vProd),
           unit: product.prod.uCom,
           taxes: {
-            icms_st:
+            icms_st: serializeNumbers(
               product.imposto?.ICMS[Object.keys(product.imposto.ICMS)[0]]
                 .vICMSST,
-
-            ipi: product.imposto?.IPI?.IPITrib?.vIPI,
+            ),
+            ipi: serializeNumbers(product.imposto?.IPI?.IPITrib?.vIPI),
           },
-          other: product.prod.vOutro,
-          discount: product.prod.vDesc,
-          shipping: product.prod.vFrete,
+          other: serializeNumbers(product.prod.vOutro),
+          discount: serializeNumbers(product.prod.vDesc),
+          shipping: serializeNumbers(product.prod.vFrete),
         })
       },
     )
   } else {
     products.push({
       id: json.nfeProc.NFe.infNFe.det.prod.cProd,
-      name: String(json.nfeProc.NFe.infNFe.det.prod.xProd),
-      quantity: json.nfeProc.NFe.infNFe.det.prod.qCom,
-      unit_price: json.nfeProc.NFe.infNFe.det.prod.vUnCom,
-      total_price: json.nfeProc.NFe.infNFe.det.prod.vProd,
+      name: json.nfeProc.NFe.infNFe.det.prod.xProd,
+      quantity: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.qCom),
+      unit_price: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vUnCom),
+      total_price: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vProd),
       unit: json.nfeProc.NFe.infNFe.det.prod.uCom,
       taxes: {
-        icms_st:
+        icms_st: serializeNumbers(
           json.nfeProc.NFe.infNFe.det.imposto?.ICMS[
             Object.keys(json.nfeProc.NFe.infNFe.det.imposto.ICMS)[0]
           ].vICMSST,
-        ipi: json.nfeProc.NFe.infNFe.det.imposto?.IPI?.IPITrib?.vIPI,
+        ),
+        ipi: serializeNumbers(
+          json.nfeProc.NFe.infNFe.det.imposto?.IPI?.IPITrib?.vIPI,
+        ),
       },
-      other: json.nfeProc.NFe.infNFe.det.prod.vOutro,
-      discount: json.nfeProc.NFe.infNFe.det.prod.vDesc,
-      shipping: json.nfeProc.NFe.infNFe.det.prod.vFrete,
+      other: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vOutro),
+      discount: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vDesc),
+      shipping: serializeNumbers(json.nfeProc.NFe.infNFe.det.prod.vFrete),
     })
   }
 
   const total = {
-    products: json.nfeProc.NFe.infNFe.total.ICMSTot.vProd,
-    others: json.nfeProc.NFe.infNFe.total.ICMSTot.vOutro,
-    icms_st: json.nfeProc.NFe.infNFe.total.ICMSTot.vST,
-    shipping: json.nfeProc.NFe.infNFe.total.ICMSTot.vFrete,
-    ipi: json.nfeProc.NFe.infNFe.total.ICMSTot.vIPI,
-    discount: json.nfeProc.NFe.infNFe.total.ICMSTot.vDesc,
-    safe: json.nfeProc.NFe.infNFe.total.ICMSTot.vSeg,
-    nf: json.nfeProc.NFe.infNFe.total.ICMSTot.vNF,
+    products: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vProd),
+    others: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vOutro),
+    icms_st: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vST),
+    shipping: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vFrete),
+    ipi: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vIPI),
+    discount: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vDesc),
+    safe: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vSeg),
+    nf: serializeNumbers(json.nfeProc.NFe.infNFe.total.ICMSTot.vNF),
   }
 
   return replay.status(200).send({ number, seller, customer, products, total })
