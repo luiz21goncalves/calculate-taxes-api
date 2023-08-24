@@ -14,6 +14,9 @@ dependencies:
   '@sentry/node':
     specifier: 7.64.0
     version: 7.64.0
+  cron:
+    specifier: 2.4.1
+    version: 2.4.1
   dotenv:
     specifier: 16.3.1
     version: 16.3.1
@@ -1315,6 +1318,12 @@ packages:
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /cron@2.4.1:
+    resolution: {integrity: sha512-ty0hUSPuENwDtIShDFxUxWEIsqiu2vhoFtt6Vwrbg4lHGtJX2/cV2p0hH6/qaEM9Pj+i6mQoau48BO5wBpkP4w==}
+    dependencies:
+      luxon: 3.4.1
     dev: false
 
   /cross-spawn@7.0.3:
@@ -2744,6 +2753,11 @@ packages:
 
   /lru_map@0.3.3:
     resolution: {integrity: sha512-Pn9cox5CsMYngeDbmChANltQl+5pi6XmTrraMSzhPmMBbmgcxmqWry0U3PGapCU1yB4/LqCcom7qhHZiF/jGfQ==}
+    dev: false
+
+  /luxon@3.4.1:
+    resolution: {integrity: sha512-2USspxOCXWGIKHwuQ9XElxPPYrDOJHDQ5DQ870CoD+CxJbBnRDIBCfhioUJJjct7BKOy80Ia8cVstIcIMb/0+Q==}
+    engines: {node: '>=12'}
     dev: false
 
   /merge-stream@2.0.0:
