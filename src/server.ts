@@ -1,8 +1,12 @@
 import { app } from './app'
 import { ENV } from './env'
+import { deleteXmlFilesJob, deleteJsonFilesJob } from './jobs'
 import { logger } from './logger'
 
-app.listen({ port: ENV.PORT, host: '0.0.0.0' })
+app.listen({ port: ENV.PORT, host: '0.0.0.0' }).then(() => {
+  deleteXmlFilesJob.start()
+  deleteJsonFilesJob.start()
+})
 
 const gracefulShutdown = () => {
   logger.info('Shutting down server')
