@@ -23,7 +23,7 @@
     "cron": "2.4.3",
     "dotenv": "16.3.1",
     "fast-xml-parser": "4.2.7",
-    "fastify": "4.22.0",
+    "fastify": "4.22.2",
     "fastify-healthcheck": "4.4.0",
     "pino": "8.15.0",
     "zod": "3.22.2"
