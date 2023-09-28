@@ -22,7 +22,7 @@
     "@sentry/node": "7.69.0",
     "cron": "2.4.3",
     "dotenv": "16.3.1",
-    "fast-xml-parser": "4.2.7",
+    "fast-xml-parser": "4.3.1",
     "fastify": "4.23.2",
     "fastify-healthcheck": "4.4.0",
     "pino": "8.15.1",
