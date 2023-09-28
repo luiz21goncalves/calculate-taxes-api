@@ -17,7 +17,7 @@
     "test:cov": "vitest run --coverage"
   },
   "dependencies": {
-    "@fastify/cors": "8.3.0",
+    "@fastify/cors": "8.4.0",
     "@fastify/multipart": "7.7.3",
     "@sentry/node": "7.71.0",
     "cron": "2.4.4",
