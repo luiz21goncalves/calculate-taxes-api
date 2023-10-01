@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@fastify/cors": "8.4.0",
-    "@fastify/multipart": "7.7.3",
+    "@fastify/multipart": "8.0.0",
     "@sentry/node": "7.72.0",
     "cron": "2.4.4",
     "dotenv": "16.3.1",
