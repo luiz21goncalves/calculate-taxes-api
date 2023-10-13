@@ -5,7 +5,7 @@
   "author": "Luiz Gonçalves <luizhbgoncalves@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": "18.18.0"
+    "node": "18.18.1"
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
