@@ -19,7 +19,7 @@
   "dependencies": {
     "@fastify/cors": "8.4.1",
     "@fastify/multipart": "8.0.0",
-    "@sentry/node": "7.79.0",
+    "@sentry/node": "7.80.0",
     "cron": "3.1.6",
     "dotenv": "16.3.1",
     "fast-xml-parser": "4.3.2",
