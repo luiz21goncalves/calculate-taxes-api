@@ -5,6 +5,6 @@
   ],
   "semanticCommits": "enabled",
   "npm": {
-    "minimumReleaseAge": "3 days"
+    "minimumReleaseAge": "15 days"
   }
 }
