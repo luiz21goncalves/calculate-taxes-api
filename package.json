@@ -5,7 +5,7 @@
   "author": "Luiz Gonçalves <luizhbgoncalves@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": "20.11.0"
+    "node": "20.11.1"
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "2.2.2",
-    "@types/node": "20.11.17",
+    "@types/node": "20.11.19",
     "@types/supertest": "6.0.2",
     "@vitest/coverage-v8": "1.2.2",
     "eslint": "8.56.0",
