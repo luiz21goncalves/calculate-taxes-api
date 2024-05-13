@@ -19,27 +19,27 @@
   "dependencies": {
     "@fastify/cors": "9.0.1",
     "@fastify/multipart": "8.2.0",
-    "@sentry/node": "7.109.0",
-    "cron": "3.1.6",
+    "@sentry/node": "8.0.0",
+    "cron": "3.1.7",
     "dotenv": "16.4.5",
     "fast-xml-parser": "4.3.6",
-    "fastify": "4.26.2",
+    "fastify": "4.27.0",
     "fastify-healthcheck": "4.4.0",
-    "pino": "8.19.0",
-    "zod": "3.22.4"
+    "pino": "9.1.0",
+    "zod": "3.23.8"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "2.2.2",
-    "@types/node": "20.12.2",
+    "@types/node": "20.12.11",
     "@types/supertest": "6.0.2",
-    "@vitest/coverage-v8": "1.4.0",
+    "@vitest/coverage-v8": "1.6.0",
     "eslint": "8.57.0",
     "eslint-plugin-import-helpers": "1.3.1",
-    "supertest": "6.3.4",
+    "supertest": "7.0.0",
     "tsup": "8.0.2",
-    "tsx": "4.7.1",
+    "tsx": "4.10.2",
     "typescript": "5.4.5",
     "vite-tsconfig-paths": "4.3.2",
-    "vitest": "1.4.0"
+    "vitest": "1.6.0"
   }
 }
