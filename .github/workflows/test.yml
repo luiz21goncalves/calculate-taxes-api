@@ -16,7 +16,7 @@ jobs:
       - name: install PNPM
         uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 9.1.1
 
       - name: cache node_modules
         uses: actions/cache@v4
@@ -30,7 +30,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20.13.1
           cache: 'pnpm'
 
         if: steps.pnpm-cache.outputs.cache-hit != 'true'
