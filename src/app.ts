@@ -12,7 +12,7 @@ import { appRoutes } from './routes'
 const app = fastify({ logger })
 
 Sentry.init({
-  integrations: [new Sentry.Integrations.Http({ tracing: true })],
+  integrations: [Sentry.httpIntegration({ breadcrumbs: true })],
   dsn: ENV.SENTRY_DSN,
   tracesSampleRate: 1.0,
   environment: ENV.NODE_ENV,
