@@ -24,8 +24,8 @@ importers:
         specifier: 16.4.5
         version: 16.4.5
       fast-xml-parser:
-        specifier: 4.3.6
-        version: 4.3.6
+        specifier: 4.4.0
+        version: 4.4.0
       fastify:
         specifier: 4.27.0
         version: 4.27.0
@@ -1563,8 +1563,8 @@ packages:
   fast-uri@2.3.0:
     resolution: {integrity: sha512-eel5UKGn369gGEWOqBShmFJWfq/xSJvsgDzgLYC845GneayWvXBf0lJCBn5qTABfewy1ZDPoaR5OZCP+kssfuw==}
 
-  fast-xml-parser@4.3.6:
-    resolution: {integrity: sha512-M2SovcRxD4+vC493Uc2GZVcZaj66CCJhWurC4viynVSTvrpErCShNcDz1lAho6n9REQKvL/ll4A4/fw6Y9z8nw==}
+  fast-xml-parser@4.4.0:
+    resolution: {integrity: sha512-kLY3jFlwIYwBNDojclKsNAC12sfD6NwW74QB2CoNGPvtVxjliYehVunB3HYyNi+n4Tt1dAcgwYvmKF/Z18flqg==}
     hasBin: true
 
   fastify-healthcheck@4.4.0:
@@ -4595,7 +4595,7 @@ snapshots:
 
   fast-uri@2.3.0: {}
 
-  fast-xml-parser@4.3.6:
+  fast-xml-parser@4.4.0:
     dependencies:
       strnum: 1.0.5
 
